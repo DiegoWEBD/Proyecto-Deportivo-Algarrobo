@@ -1,0 +1,107 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Responsive-2.3.0/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+
+<div id="loader"></div>
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+
+    <!-- Nuevo Modal Reservar Hora-->
+    <div tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <br />
+        <div id="Error_ReservarHora"></div>
+        <div class="modal-content">
+            <form id="form_AdminClases" action="javascript:onclickButton();">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Administrar Clases</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#agregarClaseModal" onclick="ResetAgregarClase()" class="btn btn-success">+</button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectorClase" class="form-control" name="Clase" onchange="ChangeClase()" required></select>
+                            <label for="selectorClase">Seleccione una clase</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input id="inputMaxParticipantes" value="" type="number" max="5000" min="1" class="form-control" name="Participantes" onchange="ChangeMaxParticipantes()" required />
+                            <label for="inputMaxParticipantes">Cantidad Máxima de Participantes</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectorDia" class="form-control" name="Dia" onchange="ChangeDia()" required>
+                                <option value="1">Lunes</option>
+                                <option value="2">Martes</option>
+                                <option value="3">Miercoles</option>
+                                <option value="4">Jueves</option>
+                                <option value="5">Viernes</option>
+                                <option value="6">Sabado</option>
+                            </select>
+                            <label for="selectorDia">Seleccione una dia</label>
+                        </div>
+                    </div>
+                    <div id="ContenedorHorarios" class="mb-3">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div><button name="button_delete" type="button" onclick="confirmarEliminarClase()" class="btn btn-danger" >Eliminar Clase</button></div>
+                    <div><button name="button" type="submit" class="btn btn-success" disabled>Guardar Cambios</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<!-- Modal Agregar Clase -->
+<div class="modal fade" id="agregarClaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_NuevaClase"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva Clase</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form_agregarClases" action="javascript:agregarNuevaClase();">
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" id="inputNombreClase" type="text" placeholder="Nombre Clase" required />
+                            <label for="selectorActividad">Ingrese Nombre Nueva Clase</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" id="inputNombreClase2" type="text" placeholder="Nombre Clase" required />
+                            <label for="selectorActividad">Confirme Nombre Nueva Clase</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success">Agregar Nueva Clase</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/datatables.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Responsive-2.3.0/js/dataTables.responsive.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Tablas.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/Admin/AdminClases.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>

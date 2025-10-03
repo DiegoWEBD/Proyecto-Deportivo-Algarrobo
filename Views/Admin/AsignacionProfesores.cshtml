@@ -1,0 +1,70 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Responsive-2.3.0/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+
+<div id="loader"></div>
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+
+    <div tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <br />
+        <div id="Error_ReservarHora"></div>
+        <div class="modal-content">
+            <form id="form_AsignarProfesores" action="javascript:onclickButton();">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Asignación Profesores</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectorClase" class="form-control" name="Clase" onchange="ChangeClase()" required></select>
+                            <label for="selectorClase">Seleccione una clase</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectorDia" class="form-control" name="Dia" onchange="ChangeDia()" required>
+                            </select>
+                            <label for="selectorDia">Seleccione una dia</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectorHorario" class="form-control" name="Horario" onchange="ChangeHorario()" required></select>
+                            <label for="selectorHorario">Seleccione un horario</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectorProfesor" class="form-control" name="Profesor" onchange="ChangeProfesor()" required></select>
+                            <label for="selectorProfesor">Seleccione un profesor</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <div><button name="button" type="submit" class="btn btn-success">Asignar</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/datatables.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Responsive-2.3.0/js/dataTables.responsive.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Tablas.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/Admin/AsignacionProfesores.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>
+

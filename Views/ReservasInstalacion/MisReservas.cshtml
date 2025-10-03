@@ -1,0 +1,85 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Responsive-2.3.0/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+
+<div id="loader"></div>
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+    
+    <div tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <br />
+        <div id="Error_ReservarHora"></div>
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Gestionar Reservas Instalaciones</h5>
+            </div>
+            <br />
+            <div class="me-3 ms-3">
+                <table id="tabla_reservas" class="display responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Clase</th>
+                            <th>Fecha</th>
+                            <th>Horario</th>
+                            <th>Cancelar Reserva</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cancelarClaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_NuevaClase"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Cancelar Reservas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                
+                    <form id="form_cancelarClases" action="javascript:CancelarReserva();">
+                        <div class="modal-body">
+                            @{if (ViewBag.esSocio == true)
+                                {<h5 id="contenidoModel">Desea canccelar la reserva de a la instalación de </h5>}}
+                            @{if (ViewBag.esSocio == false)
+                                {<h5 id="contenidoModel1">Por favor, comuníquese con la administración para cancelar y solicitar la devolución de su reserva. </h5>}}
+                            <input name="idReserva" type="hidden" value="" required />
+                        </div>
+
+                        <div class="modal-footer">
+                            @{if (ViewBag.esSocio == true)
+                                {
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-danger">Cancelar Reserva</button>
+
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Aceptar</button>
+                                }
+                            }
+                        </div>
+                    </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/datatables.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Responsive-2.3.0/js/dataTables.responsive.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Tablas.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/ReservasInstalacion/MisReservas.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>
+

@@ -1,0 +1,202 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="es-cl">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Registro Nuevo Usuario</title>
+    <link href="~/Content/styles.css" rel="stylesheet" />
+    
+</head>
+<body class="bg-primary">
+    <div id="layoutAuthentication" style="background:url(../Resources/Imagenes/DJI_0921.JPG); background-position:center center">
+        <div id="layoutAuthentication_content" class="mb-4">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-7">
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card-header"><h3 class="text-center font-weight-light my-4">Crear una cuenta</h3></div>
+                                <div class="card-body">
+                                    <form action="@Url.Action("NuevoUsuario", "Login")" method="post" enctype="multipart/form-data">
+                                        <div class="row mb-0">
+                                            <div class="form-floating mb-3">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input id="inputRut" class="form-control" type="text" name="nombreUsuario" placeholder="Enter your user name" maxlength="10" required
+                                                           value="@{ if (ViewBag.nombreUsuario != null) { @ViewBag.nombreUsuario } }" />
+                                                    <label for="inputRut">Rut (Sin Puntos,con guion y dígito verificador)</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input id="inputNombre" class="form-control" type="text" name="nombre" placeholder="Enter your first name" required
+                                                           value="@{ if (ViewBag.nombre != null) { @ViewBag.nombre } }" />
+                                                    <label for="inputNombre">Nombre</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input id="inputAPP" class="form-control" type="text" name="apellidoPaterno" placeholder="Enter your last name" required
+                                                           value="@{ if (ViewBag.apellidoPaterno != null) { @ViewBag.apellidoPaterno } }" />
+                                                    <label for="inputAPP">Apellido Paterno</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input id="inputAPM" class="form-control" type="text" name="apellidoMaterno" placeholder="Enter your last name" required
+                                                           value="@{ if (ViewBag.apellidoMaterno != null) { @ViewBag.apellidoMaterno } }" />
+                                                    <label for="inputAPM">Apellido Materno</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input id="inputFechaNac" class="form-control" type="date" name="fechaNacimiento" placeholder="Enter your last name" onchange="ComprobarEdad()" required
+                                                           value="@{ if (ViewBag.fechaNacimiento != null) { @ViewBag.fechaNacimiento } }" />
+                                                    <label for="inputAPM">Fecha Nacimiento</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input id="inputNtelefono" class="form-control" type="tel" maxlength="9" name="Ntelefono" placeholder="Enter your last name" required
+                                                           value="@{ if (ViewBag.Ntelefono != null) { @ViewBag.Ntelefono } }" />
+                                                    <label for="inputNtelefono">Número Telefonico</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input id="inputNtelefonoEmer" class="form-control" type="tel" maxlength="9" name="NtelefonoEmergencia" placeholder="Enter your last name" required
+                                                           value="@{ if (ViewBag.NtelefonoEmergencia != null) { @ViewBag.NtelefonoEmergencia } }" />
+                                                    <label for="inputNtelefonoEmer">Número Telefonico De Emergencia</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input id="inputEmail" class="form-control" type="email" name="email" placeholder="name@example.com" required
+                                                   value="@{ if (ViewBag.correo != null) { @ViewBag.correo } }" />
+                                            <label for="inputEmail">Email</label>
+                                        </div>
+                                        <div class="mt-4 mb-3" id="div_soloInstalaciones" style="display:none">
+                                            <input id="checkInstalacion" class="form-check-input" type="checkbox" onchange="esSoloReservaInstalaciones()" >
+                                            <label class="form-check-label" for="checkInstalacion">
+                                                Solo usare esta cuenta para reservar instalaciones.
+                                            </label>
+                                            <input type="hidden" id="hiddenSoloInstalacion" name="soloReservaInstalaciones" value="FALSE" />
+                                        </div>
+                                        <div class="mb-3" id="div_certificado">
+                                            <label for="certificado" class="form-label">Certificado Salud</label>
+                                            <input class="form-control" name="Certificado" type="file" id="certificado" accept=".jpg, .pdf, .jpeg" required>
+                                        </div>
+                                        <div class="mt-4 mb-3">
+                                            <input id="checkEnfermedad" class="form-check-input" type="checkbox" value="" onchange="HabilitarTextBox()" @ViewBag.EsEnfermedad>
+                                            <label class="form-check-label" for="checkEnfermedad">
+                                                Padezco de alguna enfermedad o impedimento para realizar actividad física.
+                                            </label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input id="inputEnfermedad" class="form-control" type="text" name="Enfermedad" placeholder="name@example.com" value="@{ if (ViewBag.enfermedad != null) { @ViewBag.enfermedad } }" @ViewBag.Disabled />
+                                            <label for="inputEnfermedad">Cuál(es) </label>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input id="inputPassword" class="form-control" name="password" type="password" placeholder="Create a password" required />
+                                                    <label for="inputPassword">Contraseña</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input id="inputPasswordConfirm" class="form-control" name="password_confirmacion" type="password" placeholder="Confirm password" required />
+                                                    <label for="inputPasswordConfirm">Confirmar Contraseña</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 mb-0">
+                                            <input id="checkTerminos" class="form-check-input" type="checkbox" required onchange="LeerTerminos()">
+                                            <label class="form-check-label" for="checkTerminos">
+                                                Aceptar Terminos y Condiciones.
+                                            </label>
+
+                                        </div>
+                                        <div class="mt-4 mb-0">
+                                            <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Confirmar Cuenta</button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer text-center py-3">
+                                    @{
+                                        if (ViewBag.error != null)
+                                        {
+                                            if ("".Equals(ViewBag.error) == false)
+                                            {
+                                                <div><i class="fas fa-exclamation-triangle" style="color:red"></i> <span>@ViewBag.error</span></div>
+                                            }
+                                        }
+                                    }
+                                    @{
+                                        if (ViewBag.status != null)
+                                        {
+                                            if ("".Equals(ViewBag.status) == false)
+                                            {
+                                                <div><i class="fas fa-check-circle" style="color:green"></i> <span>@ViewBag.status</span></div>
+                                            }
+                                        }
+                                    }
+                                    <div class=" text-center align-items-center justify-content-between mt-4 mb-0">
+                                        <button class="btn btn-outline-primary" style="width:100%" onclick="window.location.href='@Url.Action("Index","Login")'">¿Ya tienes una cuenta? Ir a iniciar sesión</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div id="layoutAuthentication_footer" style="display:none">
+            <footer class="py-2 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Desarrollado por &copy; Canal Ltda</div>
+                        <div>
+                            <img class="img-fluid" src="~/Resources/Imagenes/logo_cmp.png" alt="logo" style="max-width:90px" />
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">REGLAMENTO INTERNO PARA SOCIOS Y USUARIOS CLUB DEPORTIVO ALGARROBO.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="CancelarTerminos"></button>
+                </div>
+                <div class="modal-body">
+                    <embed src="~/Resources/reglamento.pdf#toolbar=0&navpanes=0&scrollbar=0&statusbar=1" type="application/pdf" width="100%" height="500em" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="CancelarTerminos()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="AceptarTerminos()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="~/Scripts/fontawesome/all.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/Principal/scripts.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/Principal/Sistema/Login/NuevoUsuario.js"></script>
+</body>
+</html>
+

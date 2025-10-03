@@ -1,0 +1,83 @@
+﻿<div id="div_contenido" class="container-fluid px-4" >
+
+    <div class="" id="modal_AgregarActividad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <br />
+        @{
+            if (ViewBag.Realizada == false)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert"><strong> Tranferencia No Realizada : </strong>@ViewBag.Detalle<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+            }
+        }
+        <div class="modal-content">
+            @{
+                if (ViewBag.Realizada == true)
+                {
+                    <form id="form_PagarMensualidad">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Estado Pago Mensualidad</h5>
+                        </div>
+                        <div class="modal-body">
+                            <table align="center" cellpadding="1" cellspacing="0" width="65%" style="border: solid 1px #0073cb; border-radius: 4px; padding: 8px; font-size: 16px; line-height: 20px; font-weight: 300; border-spacing: 0 2px">
+                                <thead >
+                                    <tr style="text-align:center; background-color:darkblue; color:whitesmoke">
+                                        <td colspan="3">Estado de Compra</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background-color: #ebebec">
+                                        <td>Número de orden de pedido</td>
+                                        <td>:</td>
+                                        <td style="text-align:right">@ViewBag.OrdenCompra</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Monto</td>
+                                        <td>:</td>
+                                        <td style="text-align:right">@ViewBag.Monto</td>
+                                    </tr>
+                                    <tr style="background-color: #ebebec">
+                                        <td>Código de autorización de la transacción</td>
+                                        <td>:</td>
+                                        <td style="text-align:right">@ViewBag.CodigoAutorizacion</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fecha de la transacción</td>
+                                        <td>:</td>
+                                        <td style="text-align:right">@ViewBag.FechaTransaccion</td>
+                                    </tr>
+                                    <tr style="background-color: #ebebec">
+                                        <td>Tipo de pago realizado</td>
+                                        <td>:</td>
+                                        <td style="text-align:right"> @ViewBag.TipoTransaccion</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tipo de cuota</td>
+                                        <td>:</td>
+                                        <td style="text-align:right">@ViewBag.TipoCuotas</td>
+                                    </tr>
+                                    @if (ViewBag.TipoCuotas != "Sin Cuotas")
+                                    {
+                                        <tr style="background-color: #ebebec">
+                                            <td>Cantidad de cuotas</td>
+                                            <td>:</td>
+                                            <td style="text-align:right">@ViewBag.CantidadCuotas</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Monto de cada cuota</td>
+                                            <td>:</td>
+                                            <td style="text-align:right"> @ViewBag.MontoCuotas</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+

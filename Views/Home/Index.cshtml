@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Scripts/MenuPrincipal/CuadrosEstilo.css" />
+
+
+
+<div id="div_contenido" class="container-fluid px-4 mb-3">
+    <div class="row " id="mobil" style="display: none">
+
+        @{
+            Dictionary<string, Object[]> menu = ViewBag.menu;
+
+            object[] menuDisponible = menu["Mi Perfil"];
+
+
+            int i = menuDisponible.Length;
+
+            //
+            if (i >= 3)
+            {
+                <section class="tiles m-0">
+                    <article class="style6">
+                        <span class="image">
+                            <img src="~/Resources/Imagenes/pic01.jpg" alt="" />
+                        </span>
+                        <a href="@Url.Action("ReservarHora","Reservas")">
+                            <h2>Reservar Hora</h2>
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </a>
+                    </article>
+                    <article class="style4">
+                        <span class="image">
+                            <img src="~/Resources/Imagenes/pic01.jpg" alt="" />
+                        </span>
+                        <a href="@Url.Action("ReservarInstalacion","ReservasInstalacion")">
+                            <h2>Reservar Instalación</h2>
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </a>
+                    </article>
+                    <article class="style2">
+                        <span class="image">
+                            <img src="~/Resources/Imagenes/pic01.jpg" alt="" />
+                        </span>
+                        <a href="@Url.Action("MisReservas","Reservas")">
+                            <h2>Mis Reservas</h2>
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </a>
+                    </article>
+                    <article class="style3">
+                        <span class="image">
+                            <img src="~/Resources/Imagenes/pic01.jpg" alt="" />
+                        </span>
+                        <a href="@Url.Action("PagarMensualidad","Reservas")">
+                            <h2>Pagar Mensualidad</h2>
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </a>
+                    </article>
+                </section>
+            }
+            else
+            {
+                <section class="tiles m-0">
+                    <article class="style4">
+                        <span class="image">
+                            <img src="~/Resources/Imagenes/pic01.jpg" alt="" />
+                        </span>
+                        <a href="@Url.Action("ReservarInstalacion","ReservasInstalacion")">
+                            <h2>Reservar Instalación</h2>
+                            <div class="content">
+                                <p></p>
+                            </div>
+                        </a>
+                    </article>
+                </section>
+            }
+
+        }
+
+
+
+
+    </div>
+    <div class="row " id="pcs" >
+        
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/Home/Index.js" defer></script>
+
+
+
+
+
+
+

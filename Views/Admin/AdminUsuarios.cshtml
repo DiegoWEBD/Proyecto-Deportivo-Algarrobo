@@ -1,0 +1,530 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Responsive-2.3.0/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Buttons-2.3.3/css/buttons.dataTables.min.css"/>
+<link rel="stylesheet" type="text/css" href="~/Scripts/MultipleSelect/multiple-select.min.css">
+
+
+<div id="loader"></div>
+<style>
+    #tabla_usuarios tbody tr td {
+        text-align: center;
+    }
+
+    #tabla_usuarios thead tr th {
+        text-align: center;
+    }
+</style>
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+    <h2 class="mt-4">Administración Usuarios</h2>
+    <div id="Error_ReservarHora" style="margin-top:0.5rem"></div>
+    <div class="row">
+        <table id="tabla_usuarios" class="display responsive" style="width:100%">
+            <thead>
+                <tr>
+                    <th data-priority="1">Nombre</th>
+                    <th data-priority="2">Apellido Paterno</th>
+                    <th data-priority="6">Apellido Materno</th>
+                    <th data-priority="3">Rut</th>
+                    <th data-priority="7">Telefono</th>
+                    <th data-priority="8">Tel. Emergencia</th>
+                    <th data-priority="9">Correo</th>
+                    <th data-priority="10">Perfil</th>
+                    <th data-priority="13">Socio</th>
+                    <th data-priority="4">Mensualidades</th>
+                    <th data-priority="5">Modificar</th>
+                    <th data-priority="11">Reservar</th>
+                    <th data-priority="12">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="mensualidadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Mensualidad Mensual</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <table id="tabla_mensualidad" class="display responsive" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th data-priority="1">Mes</th>
+                                    <th data-priority="2">Año</th>
+                                    <th data-priority="3">Monto</th>
+                                    <th data-priority="4">Fecha Transacción</th>
+                                    <th data-priority="6">Codigo Transacción</th>
+                                    <th data-priority="5">Tipo Transacción</th>
+                                    <th data-priority="7">Borrar Transacción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <input id="userNameMensualidad" type="hidden" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#mensualidadPagoModal" onclick="FijarRutMensualidad()">Agregar Mensualidad</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mensualidadPagoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Mensualidad Mensual</h5>
+                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formIngresarMensualidad" action="javascript:ActualizarPago();">
+                    <div class="modal-body">
+                        <div id="Error_ActualizarPago" style="margin-top:0.5rem"></div>
+                        <div class="modal-body">
+                            <div class="row mb-0">
+                                <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input id="inputRutMensualidad" class="form-control" type="text" value="" name="nombreUsuario" placeholder="Enter your user name" required readonly />
+                                        <label for="inputRutMensualidad">Rut</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <select class="form-control" name="year" onchange="ChangeSelectYear()" required></select>
+                                        <label for="selectorClase">Seleccione un año</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <select class="form-control" name="mes" required>
+                                            <option value="-1">
+                                                Seleccione un mes
+                                            </option>
+                                        </select>
+                                        <label for="selectorClase">Seleccione un mes</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <input id="inputMonto" class="form-control" type="number" name="monto" placeholder="Enter your last name" required value="28000" />
+                                        <label for="inputMonto">Monto</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success">Agregar Mensualidad</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Información Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="modalUsuario" action="javascript:ActualizarPerfil();">
+                    <div id="Error_ReservarHora2" style="margin-top:0.5rem"></div>
+                    <div class="modal-body">
+                        <div class="row mb-0">
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputRut" class="form-control" type="text" value="" name="nombreUsuario" placeholder="Enter your user name" required readonly />
+                                    <label for="inputRut">Rut (Sin Puntos, con guion y digito verificador)</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputNombre" class="form-control" type="text" name="nombre" placeholder="Enter your first name" required value="" />
+                                    <label for="inputNombre">Nombre</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputAPP" class="form-control" type="text" name="apellidoPaterno" placeholder="Enter your last name" required value="" />
+                                    <label for="inputAPP">Apellido Paterno</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputAPM" class="form-control" type="text" name="apellidoMaterno" placeholder="Enter your last name" required value="" />
+                                    <label for="inputAPM">Apellido Materno</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputNtelefono" class="form-control" type="tel" maxlength="9" name="Ntelefono" placeholder="Enter your last name" required value="" />
+                                    <label for="inputNtelefono">Número Telefonico</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputNtelefonoEmer" class="form-control" type="tel" maxlength="9" name="NtelefonoEmergencia" placeholder="Enter your last name" required value="" />
+                                    <label for="inputNtelefonoEmer">Número Telefonico De Emergencia</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="inputEmail" class="form-control" type="email" name="email" placeholder="name@example.com" required value="" autocomplete="off" />
+                            <label for="inputEmail">Email</label>
+                        </div>
+                        <div class="mt-4 mb-3">
+                            <input id="checkEnfermedad" class="form-check-input" type="checkbox" value="" onchange="">
+                            <label class="form-check-label" for="checkEnfermedad">
+                                Padezco de alguna enfermedad o impedimento para realizar actividad física.
+                            </label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="inputEnfermedad" class="form-control" type="text" name="Enfermedad" placeholder="name@example.com" value="" />
+                            <label for="inputEnfermedad">Cuál(es) </label>
+                        </div>
+
+                        <!--<div class="form-floating mb-3">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Options
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input mx-2" type="checkbox" value="option1" id="checkbox1">
+                                        <label class="form-check-label" for="checkbox1">
+                                            Option 1
+                                        </label>
+                                    </div>
+                                </li>-->
+                        <!-- Add more options as needed -->
+                        <!--</ul>
+                            </div>
+                        </div>-->
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputPassword" class="form-control" name="password" type="password" placeholder="Create a password" />
+                                    <label for="inputPassword">Cambiar Contraseña</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputPasswordConfirm" class="form-control" name="password_confirmacion" type="password" placeholder="Confirm password" />
+                                    <label for="inputPasswordConfirm">Confirmar Contraseña</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <select name="Clase" class="form-control" type="text" required>
+                                    <option>Administrador</option>
+                                    <option>Usuario</option>
+                                    <option>Guardia</option>
+                                    <option>Profesor</option>
+                                </select>
+                                <label for="selectorClase">Seleccione un perfil</label>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <select name="TipoSocio" class="form-control" type="text" required onchange="ChangeTipoSocio()">
+                                </select>
+                                <label for="selectorTipoSocio">Seleccione tipo Socio</label>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <select name="Empresa" class="form-control" type="text" required>
+                                </select>
+                                <label for="selectorEmpresa">Seleccione empresa</label>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mb-3">
+                            <input id="checkSocio" class="form-check-input" type="checkbox" value="" onchange="ChangeCheckUsuario()">
+                            <label class="form-check-label" for="checkSocio">
+                                Es Socio de Club Deportivo Algarrobo.
+                            </label>
+                        </div>
+                        <div class="mt-4 mb-3">
+                            <input id="checkSoloReservaInstalacion" class="form-check-input" type="checkbox" value="" onchange="">
+                            <label class="form-check-label" for="checkSoloReservaInstalacion">
+                                Solo Puede Reservar Instalaciones.
+                            </label>
+                        </div>
+                        <div class="mt-4 mb-3">
+                            <input id="checkBloquearCuenta" class="form-check-input" type="checkbox" value="" onchange="">
+                            <label class="form-check-label" for="checkBloquearCuenta">
+                                Bloquear Cuenta.
+                            </label>
+                        </div>
+
+                        <div class="mt-4 mb-3">
+                            <input id="checkTieneCarga" class="form-check-input" type="checkbox" value="" onchange="onchangeTieneCarga">
+                            <label class="form-check-label" for="checkTienCarga">
+                                Tiene Carga.
+                            </label>
+                        </div>
+
+
+
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Cargas
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="mt-4 mb-3">
+                                            <div class="mb-3 mb-md-0">
+                                                <label>Cargas</label>
+                                                <select multiple="multiple" class="multiple-select" tabindex="-1">
+                                                    <option value="" selected>Seleccione carga</option>
+                                                    <option value="1">January</option>
+                                                    <option value="2">February</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                                    
+
+
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success" name="BotonGuardar">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="profileReserva" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div id="Error_NuevaClase"></div>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Datos De Reservas</h5>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="card shadow-lg border-0 rounded-lg mt-0">
+                    <div class="card-body">
+                        <form id="form_ReservarHora" method="post" action="javascript:ReservarHora();">
+                            <div class="row mb-0">
+                                <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input id="NombreCompleto" class="form-control" type="text" name="nombre" placeholder="Enter your first name" required
+                                                   value="" readonly />
+                                            <label for="inputNombre">Nombre</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input class="form-control" id="inputFecha" type="text" placeholder="Fecha" onchange="ChangeFecha(this)" required />
+                                            <label for="inputFecha">Seleccione un día</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <select id="selectorClase" name="Clase" class="form-control" type="text" required onchange="ChangeSelectClase(this)"></select>
+                                            <label for="selectorClase">Seleccione una clase</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <select id="selectorHorario" name="Horario" class="form-control" type="text" onchange="ChangeSelectHorario()" required></select>
+                                            <label for="selectorHorario">Seleccione un horario</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <select id="selectorCupos" name="Cupos" class="form-control " type="text" required></select>
+                                            <label for="selectorCupos">Cupos</label>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="rut" />
+                                </div>
+                            </div>
+                            <div class="mt-4 mb-0">
+                                <div class="d-grid"><button type="submit" name="button" class="btn btn-primary btn-block" disabled>Confirmar Datos</button></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="profileBorrarTranferencia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div id="Error_cancelarInstalacionModal"></div>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title">Eliminar Tranferencia y Mensualidad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form_borrarMensualidadModal" action="javascript:BorrarMensualidad();">
+                    <div class="modal-body">
+                        <h5 id="contenidoEliminarTranferencia"> </h5>
+                        <input name="idTranferencia" type="hidden" required />
+                        <input name="idMensualidad" type="hidden" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="CancelarEliminacionMensualidad()">Cerrar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/datatables.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Responsive-2.3.0/js/dataTables.responsive.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Buttons-2.3.3/js/dataTables.buttons.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/xlsx.full.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/FileSaver/FileSaver.min.js" defer></script>
+
+<script type="text/javascript" src="~/Scripts/MultipleSelect/multiple-select.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Tablas.js?v=3.10" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/Admin/AdminUsuarios.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>

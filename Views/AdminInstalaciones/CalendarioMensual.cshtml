@@ -1,0 +1,180 @@
+﻿
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Responsive-2.3.0/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+<link rel='stylesheet' type="text/css" href="~/Scripts/bootstrap-icons.css">
+
+<style>
+
+    .style_1 {
+        background-color: lightgreen;
+        border: 1px solid;
+        border-color: darkgreen;
+    }
+
+    .style_2 {
+        background-color: orange;
+        border: 1px solid;
+        border-color: darkorange;
+    }
+
+    .style_3 {
+        background-color: skyblue;
+        border: 1px solid;
+        border-color: deepskyblue;
+    }
+
+    .style_4 {
+        background-color: lightpink;
+        border: 1px solid;
+        border-color: deeppink;
+    }
+
+    .style_5 {
+        background-color: yellowgreen;
+        border: 1px solid;
+        border-color: green;
+    }
+
+    .style_6 {
+        background-color: deepskyblue;
+        border: 1px solid;
+        border-color: blue;
+    }
+
+    .style_7 {
+        background-color: lightsalmon;
+        border: 1px solid;
+        border-color: orange;
+    }
+
+    .style_8 {
+        background-color: moccasin;
+        border: 1px solid;
+        border-color: peachpuff;
+    }
+
+    .fc-event-title-container:hover {
+        cursor: pointer;
+    }
+</style>
+
+
+<div id="loader"></div>
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+
+    <div id="Calendario" class="mt-4">
+
+    </div>
+</div>
+
+<div class="modal fade" id="modalReservaInstalacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_NuevaClase"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Datos De Reserva Instalación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card shadow-lg border-0 rounded-lg mt-0">
+                <div class="card-body">
+                    <form id="FormDatosUsuario">
+                        <div class="row mb-0">
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputInstalacion" class="form-control" type="text" name="instalacion" placeholder="Enter your first name" readonly
+                                           value="" />
+                                    <label for="inputInstalacion">Instalación:</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputFecha" class="form-control" type="text" name="fecha" placeholder="Enter your first name" readonly
+                                           value="" />
+                                    <label for="inputFecha">Fecha:</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputHorario" class="form-control" type="text" name="horario" placeholder="Enter your first name" readonly
+                                           value="" />
+                                    <label for="inputFecha">Horario:</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputRut" class="form-control" type="text" name="rutUsuario" placeholder="Enter your user name"
+                                           value="" maxlength="10" readonly />
+                                    <label for="inputRut">Rut:</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputNombre" class="form-control" type="text" name="nombre" placeholder="Enter your first name" readonly
+                                           value="" />
+                                    <label for="inputNombre">Nombre:</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputAPP" class="form-control" type="text" name="apellidoPaterno" placeholder="Enter your last name" readonly
+                                           value="" />
+                                    <label for="inputAPP">Apellido Paterno:</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputAPM" class="form-control" type="text" name="apellidoMaterno" placeholder="Enter your last name" readonly
+                                           value="" />
+                                    <label for="inputAPM">Apellido Materno:</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputCorreo" class="form-control" type="text" name="correo" placeholder="Enter your first name" readonly
+                                           value="" />
+                                    <label for="inputCorreo">Correo:</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputNtelefono" class="form-control" type="text" name="ntelefono" placeholder="Enter your first name" readonly
+                                           value="" />
+                                    <label for="inputNtelefono">Telefono:</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputRequerimiento" class="form-control" type="text" name="requerimiento" placeholder="Enter your first name" readonly
+                                           value="" />
+                                    <label for="inputRequerimiento">Requerimiento:</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>
+
+<script type="text/javascript" src="~/Scripts/Fullcalendar/dist/index.global.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Fullcalendar/dist/Tema/index.global.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Fullcalendar/dist/es.global.min.js" defer></script>
+
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/AdminInstalaciones/CalendarioMensual.js" defer></script>

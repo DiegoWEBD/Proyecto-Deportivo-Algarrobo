@@ -1,0 +1,94 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+
+<div id="loader"></div>
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+
+    <div class="" id="modal_AgregarActividad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <br />
+        <div id="Error_ReservarHora"></div>
+        <div class="modal-content">
+            <form id="form_PagarMensualidad" method="post" action="javascript:IniciarModalPago();" >
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Pagar Mensualidad</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="year" class="form-control" type="text" required onchange="ChangeSelectYear(this)">
+                            </select>
+                            <label for="selectorClase">Seleccione un Año</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="mes" class="form-control" type="text" required onchange="ChangeSelectMes(this)">
+                                <option value="-1">Seleccione un mes</option>
+                            </select>
+                            <label for="selectorHorario">Seleccione un Mes</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input name="Valor" class="form-control" value="" readonly required />
+                            <label for="selectorValor">Valor Total Mensualidad</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="Estado" class="form-control " type="text" required></select>
+                            <label for="selectorCupos">Detalle</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button name="button" type="submit" class="btn btn-success" disabled>Pagar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPagarMensualidad" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header  btn-primary">
+                <h5 class="modal-title" id="staticBackdropLabel">Pago de Mensualidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick=""></button>
+            </div>
+            <form id="form_PagarMensualidadFinal" method="post" action="@ViewBag.Action" target="_blank">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input name="year" class="form-control" type="text" readonly required />
+                            <label for="selectorClase">Año</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input name="mes" class="form-control" type="text" readonly required />
+                            <label for="selectorHorario">Mes</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input name="Valor" class="form-control" value="" readonly required />
+                            <label for="selectorValor">Valor Total Mensualidad</label>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="token_ws" value="@ViewBag.Token" />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" >Pagar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/Reservas/PagarMensualidad.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>

@@ -1,0 +1,145 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Responsive-2.3.0/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
+
+<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+
+
+
+
+<div id="loader"></div>
+@*<style>
+        #tabla_usuarios tbody tr td {
+            text-align: center;
+        }
+
+        #tabla_usuarios thead tr th {
+            text-align: center;
+        }
+    </style>*@
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+    <h2 class="mt-4">Administrar Empresas</h2>
+    <div id="Error_ReservarHora" style="margin-top:0.5rem"></div>
+    <div class="row mt-3">
+        <table id="tabla_usuarios" class="display responsive" style="width:100%">
+            <thead>
+                <tr>
+
+                    <th data-priority="1">ID</th>
+                    <th data-priority="2">Empresa</th>
+                    <th data-priority="3">Modificar</th>
+                    <th data-priority="5">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Empresa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="modalEmpresa" action="javascript:crearEmpresa();">
+                <div class="modal-body">
+                    <div class="row mb-0">
+                        <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputEmpresa" class="form-control" type="text" value="" name="nombreEmpresa" placeholder="Ingresa el nombre de la empresa" required maxlength="30" />
+                                <label for="inputNombreEmpresa">Nombre de la empresa socia</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" name="BotonGuardar">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Modificar Socio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="modalModificarEmpresa" action="javascript:modificarEmpresa();">
+                <div class="modal-body">
+                    <div class="row mb-0">
+                        <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputIdModificar" class="form-control" type="text" value="" name="idEmpresa" required readonly />
+                                <label for="inputIdModificar">Id Empresa</label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputEmpresaModificar" class="form-control" type="text" value="" name="nombreEmpresa" placeholder="Ingresa el nombre de la empresa" required maxlength="30" />
+                                <label for="inputNombreEmpresa">Nombre de la empresa socia</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" name="BotonGuardar">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Empresa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="modalEliminarEmpresa" action="javascript:EliminarEmpresa();">
+                <div class="modal-body">
+                    <div class="row mb-0">
+                        <label id="labelEliminar">¿Esta Seguro Que Desea Eliminar la Empresa? <input type="text" readonly class="plaintext" id="nomEmpElim" value="" style="border: none; background-color: transparent; outline: none; cursor: default;"></label>
+                    </div>
+                    <input type="hidden" value="" id="idEmpresaEliminar" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success" name="BotonGuardar">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/datatables.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Responsive-2.3.0/js/dataTables.responsive.min.js" defer></script>
+
+
+<script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js" defer></script>
+
+
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Tablas.js?v=3.10" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/Admin/Empresas.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>

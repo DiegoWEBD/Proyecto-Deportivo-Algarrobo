@@ -1,0 +1,193 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Responsive-2.3.0/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+
+<div id="loader"></div>
+<script>
+    var dia_global = @ViewBag.dia;
+    var mes_global = @ViewBag.mes;
+    var year_global = @ViewBag.year;
+    var hora_global = @ViewBag.hora;
+</script>
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+
+    <div class="" id="modal_AgregarActividad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <br />
+        <div id="Error_ReservarHora"></div>
+        <div id="Informacion">
+            <div class="alert alert-warning" role="alert">
+                <b>Novedad en reservas:</b> ¡Mejora tu planificación! Ahora puedes reservar el acceso al gimnasio con una semana de antelación. Las reservas de clases dirigidas seguirán siendo con un día de anticipación.
+            </div>
+        </div>
+        <div class="modal-content">
+            <form id="form_ReservarHora" action="javascript:EnviarModalUsuario();">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Reserva de Hora "Sin Mensualidad"</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" id="inputFecha" type="text" placeholder="Fecha" onchange="ChangeFecha(this)" required />
+                            <label for="selectorActividad">Seleccione un día</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="Clase" class="form-control" type="text" required onchange="ChangeSelectClase(this)"></select>
+                            <label for="selectorClase">Seleccione una clase</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="Horario" class="form-control" type="text" required onchange="ChangeSelectHorario(this)"></select>
+                            <label for="selectorHorario">Seleccione un horario</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="Cupos" class="form-control " type="text" required></select>
+                            <label for="selectorCupos">Cupos</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button name="button" type="submit" class="btn btn-success" disabled>Reservar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal datos usuario invitado CLase -->
+<div class="modal fade" id="datosInvitadoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_NuevaClase"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Datos De Reservas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card shadow-lg border-0 rounded-lg mt-0">
+                <div class="card-body">
+                    <form id="FormDatosUsuario" action="javascript:EnviarModalPagar();" method="post">
+                        <div class="row mb-0">
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputRut" class="form-control" type="text" name="nombreUsuario" placeholder="Enter your user name" required
+                                           value="" />
+                                    <label for="inputRut">Rut (Sin Puntos,con guion y dígito verificador)</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputNombre" class="form-control" type="text" name="nombre" placeholder="Enter your first name" required
+                                           value="" />
+                                    <label for="inputNombre">Nombre</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputAPP" class="form-control" type="text" name="apellidoPaterno" placeholder="Enter your last name" required
+                                           value="" />
+                                    <label for="inputAPP">Apellido Paterno</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputAPM" class="form-control" type="text" name="apellidoMaterno" placeholder="Enter your last name" required
+                                           value="" />
+                                    <label for="inputAPM">Apellido Materno</label>
+                                </div>
+                            </div>
+                            <!--
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputNtelefono" class="form-control" type="tel" maxlength="9" name="Ntelefono" placeholder="Enter your last name" required
+                                           value="" />
+                                    <label for="inputNtelefono">Número Telefonico</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputNtelefonoEmer" class="form-control" type="tel" maxlength="9" name="NtelefonoEmergencia" placeholder="Enter your last name" required
+                                           value="" />
+                                    <label for="inputNtelefonoEmer">Número Telefonico De Emergencia</label>
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="inputEmail" class="form-control" type="email" name="email" placeholder="name@example.com" required
+                                   value="" />
+                            <label for="inputEmail">Email</label>
+                        </div>
+                        <div class="mt-4 mb-0">
+                            <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Confirmar Datos</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="datosPagarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_NuevaClase"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Pago de Clase</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card shadow-lg border-0 rounded-lg mt-0">
+                <div class="card-body">
+                    <form id="form_PagarClase" method="post" action="">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input name="Fecha" class="form-control" value="" readonly required />
+                                    <label>Fecha</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input name="Clase" class="form-control" value="" readonly required />
+                                    <label>Clase</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input name="Hora" class="form-control" value="" readonly required />
+                                    <label>Horario</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input name="Valor" class="form-control" value="3.000" readonly required />
+                                    <label>Valor Clase</label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="token_ws" value="" />
+                        <div class="modal-footer">
+                            <button name="button" type="submit" class="btn btn-success">Pagar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/datatables.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Responsive-2.3.0/js/dataTables.responsive.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Tablas.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/Reservas/ReservarHoraDia.js" defer></script>
+
+

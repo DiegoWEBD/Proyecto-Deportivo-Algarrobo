@@ -1,0 +1,239 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+
+<div id="loader"></div>
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+
+    <div class="" id="modal_AgregarActividad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <br />
+        <div id="Error_ReservarHora"></div>
+        <div class="modal-content">
+            <form id="form_ReservarHora" action="javascript:ActivarModalInvitado();">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Reserva de Instalación</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" id="inputFecha" type="text" placeholder="Fecha" onchange="ChangeFecha()" required />
+                            <label for="selectorActividad">Seleccione un día</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="TipoInstalacion" class="form-control" type="text" required onchange="ChangeTipoInstalacion()"></select>
+                            <label for="selectorClase">Seleccione un Tipo de Instalación</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="instalacion" class="form-control" type="text" required onchange="ChangeSelectInstalacion(this)"></select>
+                            <label for="selectorClase">Seleccione una Instalación</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="Horario" class="form-control" type="text" required onchange="ChangeSelectHorario()"></select>
+                            <label for="selectorHorario">Seleccione un horario</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="Cupos" class="form-control " type="text" required></select>
+                            <label for="selectorCupos">Cupos</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select name="Precio" class="form-control " type="text" required></select>
+                            <label for="selectorCupos">Precio</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button name="button" type="submit" class="btn btn-success" disabled>Reservar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>
+
+<div class="modal fade" id="datosInvitadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Datos De Reservas</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card shadow-lg border-0 rounded-lg">
+                <form id="FormDatosUsuario" action="javascript:ActivarContrato();" method="post">
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputRut" class="form-control" type="text" name="nombreUsuario" placeholder="Enter your user name" required
+                                       value="" />
+                                <label for="inputRut">Rut (Sin Puntos,con guion y dígito verificador)</label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputNombre" class="form-control" type="text" name="nombre" placeholder="Enter your first name" required
+                                       value="" />
+                                <label for="inputNombre">Nombre</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="inputAPP" class="form-control" type="text" name="apellidoPaterno" placeholder="Enter your last name" required
+                                       value="" />
+                                <label for="inputAPP">Apellido Paterno</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="inputAPM" class="form-control" type="text" name="apellidoMaterno" placeholder="Enter your last name" required
+                                       value="" />
+                                <label for="inputAPM">Apellido Materno</label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="inputTelefono" class="form-control" type="number" min="0" max="999999999" name="telefono" placeholder="name@example.com" required
+                                   value="" />
+                            <label for="inputTelefono">Número de Teléfono</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="inputEmail" class="form-control" type="email" name="email" placeholder="name@example.com" required
+                                   value="" />
+                            <label for="inputEmail">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="inputComentarioArriendo" class="form-control" type="text" maxlength="100" name="comentario" placeholder="name@example.com" value="" />
+                            <label for="inputComentarioArriendo">Comentario Sobre Arriendo</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Siguiente</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalPagarInstalacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header  btn-primary">
+                <h5 class="modal-title" id="staticBackdropLabel">Pago de Instalación</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick=""></button>
+            </div>
+            <div class="card shadow-lg border-0 rounded-lg">
+                <form id="form_PagarInstalacion" method="post" action="@ViewBag.Action">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputInstalacionPago" name="instalacion" class="form-control" type="text" readonly required />
+                                <label for="inputInstalacionPago">Instalación</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputFechaPago" name="fecha" class="form-control" type="text" readonly required />
+                                <label for="inputFechaPago">Fecha</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputHorarioPago" name="horario" class="form-control" type="text" readonly required />
+                                <label for="inputHorarioPago">Horario</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input id="inputValorPago" name="Valor" class="form-control" value="" readonly required />
+                                <label for="inputValorPago">Valor Arriendo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="token_ws" value="@ViewBag.Token" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Pagar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalContratoInstalacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="staticBackdropLabel">ENTREGA TEMPORAL DE ESPACIOS CLUB.</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="CancelarTerminos"></button>
+            </div>
+            <div class="modal-body">
+                <figure class="text-center">
+                    <p class="mb-0"><strong>CLUB DEPORTIVO ALGARROBO</strong></p>
+                    <p class="mb-0"><strong>y</strong></p>
+                    <p class="mb-0"><strong id="nombreCompletoTitulo"></strong></p>
+                </figure>
+                <figure style="text-align:justify">
+                    <p>
+                        En Vallenar, <strong>a @ViewBag.fechaCompleta</strong>, comparecen: Por una parte, como arrendador, Club Deportivo Algarrobo de Vallenar, RUT 75.977.100-1, representada legalmente por don Rodrigo Alejandro Arancibia Araya, RUT.15.514.740-7, ambos domiciliados en Vallenar, en calle Avenida costanera sur 2136; y por otra parte como arrendatario temporal de espacios,
+                        <strong id="nombreCompletoTexto"></strong>, domiciliado en Eusebio Lillo 1072, comuna de Vallenar, <strong id="rutTexto"></strong>, y expresan: Que vienen en celebrar la siguiente prestación temporal de espacios.
+                    </p>
+                    <p>Club Deportivo Algarrobo, tiene en cedida propiedad ubicada en calle Avenida Costanera sur N° 2136 de la misma ciudad, Rol de Avalúos Nº 782-1 y 782-5 de la Comuna de Vallenar.</p>
+                    <p><ins><strong>1.- OBJETO DE ENTREGA TEMPORAL DE ESPACIOS: </strong></ins>A través del presente, el arrendador, arrienda: <strong id="instalacion_contrato">Área de Picnic N° 2.</strong></p>
+                    <p><ins><strong>2.- PLAZO: </strong></ins>La presente entrega temporal de espacios rige a partir de la fecha de celebración del presente, en la que se hace entrega material del lugar indicado en cláusula segunda, y su vigencia será de fecha <strong id="fechaArriendo_contrato">03 de enero de 2023 a las 00:00 hrs.</strong></p>
+                    <p><ins><strong>3. RENTA: </strong></ins>La renta de la entrega temporal de espacios es la suma de <strong id="precio_contrato">$0</strong>.  Se paga por adelantado en depósito de la cuenta corriente número 0208461880, del Banco Itaú, sucursal de Vallenar.</p>
+                    <p><ins><strong>4. RESTITUCIÓN Y RESPONSABILIDADES: </strong></ins>Concluido el plazo, el arrendatario deberá hacer entrega inmediatamente del lugar arrendado.  El arrendador deberá hacer entrega del lugar arrendado en las mismas condiciones en que le fue entregado, respondiendo hasta la culpa levísima por los deterioros, desperfectos y cualquier detrimento de la cosa arrendada.</p>
+                    <p>Asimismo, el arrendatario deberá responder hasta la culpa levísima de los actos que se cometan en el lugar arrendado, exonerando completamente al arrendador por los daños que puedan causarse a los bienes y a las personas.  En caso de injurias o daños en las personas que se cometan u ocurran en el lugar arrendado deberá el arrendamiento hacer directamente la denuncia a los organismos respectivos, y sin perjuicio de la misma información que deberá entregar al arrendador.</p>
+                    <p>En caso de accidentes que ocurran en el lugar arrendado, el arrendatario asume completamente las responsabilidades por estos, haciéndose deudor exclusivo y excluyente de las eventuales indemnizaciones a las que pudieran ser condenados.  Además, deberá defender judicialmente al arrendador en los eventuales juicios indemnizatorios que pudieran dar lugar.</p>
+                    <p><ins><strong>5.- EJEMPLARES DE ESTA ENTREGA TEMPORAL DE ESPACIOS:  </strong></ins>La presente entrega temporal de espacios, se otorga en dos ejemplares del mismo tenor, quedando uno en poder del arrendatario y uno en poder del propietario.</p>
+                    <p><ins><strong>6.- DOMICILIO: </strong></ins>Para todos los efectos legales que deriven la presente entrega temporal de espacios, las partes fijan como domicilio la ciudad de Vallenar, y se someten a la competencia de sus Tribunales de Justicia.</p>
+                </figure>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="CancelarTerminos()">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="EnviarReserva()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAvisoSolicitud" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="">Solicitud Arriendo de Instalación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form_cancelarDiaInstalaciones" action="">
+                <div class="modal-body">
+                    <blockquote class="blockquote">
+                        <p>Se ha enviado una solicitud al administrador para el arriendo de la instalación. Este se pondrá en contacto a la brevedad posible para coordinar los detalles correspondientes.</p>
+                    </blockquote>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/ReservasInstalacion/ReservarInstalacionInvitado.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>
+
+

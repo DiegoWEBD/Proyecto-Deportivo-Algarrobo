@@ -1,0 +1,275 @@
+﻿<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Responsive-2.3.0/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DateRangePicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/Loader/Loader.css" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/DataTable/Buttons-2.3.3/css/buttons.dataTables.min.css" />
+
+
+<div id="loader"></div>
+
+<div id="div_contenido" class="container-fluid px-4" style="display:none">
+
+    <div tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <br />
+        <div id="Error_ReservarHora"></div>
+        <div class="modal-content">
+            <form id="form_AdminClases">
+                <div class="modal-header btn-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Gestionar Instalaciones</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" id="inputFecha" type="text" placeholder="Fecha" onchange="ChangeFecha(this)" required />
+                            <label for="inputFecha">Seleccione un día</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectorTipoInstalacion" name="TipoInstalacion" class="form-control" type="text" required onchange="ChangeTipoInstalacion()"></select>
+                            <label for="selectorTipoInstalacion">Seleccione un Tipo de Instalación</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectorInstalacion" name="Instalacion" class="form-control" type="text" onchange="ChangeSelectInstalacion(this)">
+                                <option></option>
+                            </select>
+                            <label for="selectorInstalacion">Seleccione una instalación</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <select id="selectHorario" name="Horario" class="form-control" type="text" onchange="ChangeSelectHorario(this)">
+                            </select>
+                            <label for="selectHorario">Seleccione un horario</label>
+                        </div>
+                    </div>
+                    @*<div class="mb-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input id="logUsuario" value="" type="text" class="form-control" name="logUsuario" disabled />
+                            <label for="logUsuario">Reservado por</label>
+                        </div>
+                    </div>*@
+
+                </div>
+                <div class="modal-footer">
+                    <div><button type="button" name="buttonCancelarDia" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelarInstalacionDiaModal" disabled onclick="CancelarDia()">Cancelar Dia</button></div>
+                    <div><button type="button" name="buttonCancelarClase" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelarInstalacionModal" disabled onclick="CancelarClase()">Cancelar Instalación</button></div>
+                    <div><button type="button" name="buttonAgregarReserva" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#datosAgregarReservaModal" onclick="PonerNombreSemanaRepetir()" disabled>Agregar Reserva</button></div>
+                </div>
+            </form>
+
+            <div class="me-3 ms-3">
+                <table id="tabla_reservas" class="display responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th data-priority="1">Nombre</th>
+                            <th data-priority="2">Apellido Paterno</th>
+                            <th data-priority="10">Apellido Materno</th>
+                            <th data-priority="3">Instalación</th>
+                            <th data-priority="4">Fecha</th>
+                            <th data-priority="5">Horario</th>
+                            <th data-priority="9">Contacto</th>
+                            <th data-priority="6">Requerimientos</th>
+                            <th data-priority="7">Horario Llegada</th>
+                            <th data-priority="12">Creado Por</th>
+                            <th data-priority="8">Asistentes</th>
+                            <th data-priority="11">Cancelar Reserva</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cancelarClaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_NuevaClase"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Cancelar Reservas Instalación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form_cancelarClases" action="javascript:CancelarReserva();">
+                <div class="modal-body">
+                    <h5 id="contenidoModel"> </h5>
+                    <input name="idReserva" type="hidden" value="" required />
+                    <input name="userName" type="hidden" value="" required />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger">Cancelar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="datosAgregarReservaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_NuevaClase"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="exampleModalLabel">Datos De Reserva Instalación</h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card shadow-lg border-0 rounded-lg mt-0">
+                <div class="card-body">
+                    <form id="FormDatosUsuario" action="javascript:RealizarReserva();" method="post">
+                        <div class="row mb-0">
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputRut" class="form-control" type="text" name="rutUsuario" placeholder="Enter your user name" required
+                                           value="" maxlength="10" />
+                                    <label for="inputRut">Rut (Sin Puntos,con guion y dígito verificador)</label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input id="inputNombre" class="form-control" type="text" name="nombre" placeholder="Enter your first name" required
+                                           value="" />
+                                    <label for="inputNombre">Nombre</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputAPP" class="form-control" type="text" name="apellidoPaterno" placeholder="Enter your last name" required
+                                           value="" />
+                                    <label for="inputAPP">Apellido Paterno</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input id="inputAPM" class="form-control" type="text" name="apellidoMaterno" placeholder="Enter your last name" required
+                                           value="" />
+                                    <label for="inputAPM">Apellido Materno</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="inputEmail" autocomplete="on" class="form-control" type="email" name="email" placeholder="name@example.com" required
+                                   value="" />
+                            <label for="inputEmail">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="inputTelefono" autocomplete="on" class="form-control" type="number" min="0" max="999999999" name="telefono" placeholder="name@example.com" required
+                                   value="" />
+                            <label for="inputTelefono">Número de Teléfono</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="MontoIntalacion" autocomplete="on" class="form-control" type="number" name="monto" placeholder="Enter your last name" required
+                                   value="" />
+                            <label for="MontoIntalacion">Monto</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="HorarioLlegada" autocomplete="on" class="form-control" type="text" name="HorarioLlegada" placeholder="Enter your last name" required
+                                   value="" />
+                            <label for="HorarioLlegada">Horario Llegada</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="Requerimientos" autocomplete="on" class="form-control" type="text" name="Requerimientos" placeholder="Enter your last name" required
+                                   value="" />
+                            <label for="Requerimientos">Requerimientos Clientes</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    No Repetir
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Repetir Todos Los Días Que Quedan De La Semana (Mismo Horario)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+                                <label class="form-check-label" for="flexRadioDefault3" id="LabelRepetirSemana">
+                                    Repetir Todos Los Martes Del Mes.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-0">
+                            <div class="d-grid"><button type="submit" class="btn btn-primary btn-block">Confirmar Reserva</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cancelarInstalacionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_cancelarInstalacionModal"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title">Cancelar Reservas de Instalación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form_cancelarInstalacionModal" action="javascript:CancelarInstalacionAjax();">
+                <div class="modal-body">
+                    <h5 id="contenidoCancelarInstalacionModal"> </h5>
+                    <input name="idReserva" type="hidden" value="" required />
+                    <input name="userName" type="hidden" value="" required />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger">Cancelar Reservas</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cancelarInstalacionDiaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="Error_cancelarInstalacionDiaModal"></div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header btn-primary">
+                <h5 class="modal-title" id="">Cancelar Reservas de Instalaciones del Día</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form_cancelarDiaInstalaciones" action="javascript:CancelarInstalacionDiaAjax();">
+                <div class="modal-body">
+                    <h5 id="contenidoCancelarInstalacionDiaModal"> </h5>
+                    <input name="idReserva" type="hidden" value="" required />
+                    <input name="userName" type="hidden" value="" required />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger">Cancelar Reservas</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/moment.min.js" defer></script>
+<script type="text/javascript" src="~/Scripts/DateRangePicker/daterangepicker.js" defer></script>
+
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/datatables.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Responsive-2.3.0/js/dataTables.responsive.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/DataTable/Buttons-2.3.3/js/dataTables.buttons.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/xlsx.full.min.js" defer></script>
+<script type="text/javascript" charset="utf-8" src="~/Scripts/FileSaver/FileSaver.min.js" defer></script>
+
+
+
+<script type="text/javascript" src="~/Scripts/Loader/Loader.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Tablas.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Sistema/AdminInstalaciones/GestionarInstalaciones.js" defer></script>
+<script type="text/javascript" src="~/Scripts/Principal/Comunes/LlamadoServer.js" defer></script>
